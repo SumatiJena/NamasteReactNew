@@ -1,3 +1,40 @@
-#heading{
-    color:red;
+.heading{
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
+}
+.logo img{
+    width:100px;
+
+} 
+.nav-list > ul li{
+    display: inline-block;
+    padding: 5px 20px;
+    font-size: 20px;
+}
+.search{
+    margin: 30px 0px;
+}
+.restroCard{
+    width: 200px;
+    padding: 10px;
+    background-color: #b6b0b0;
+    margin: 10px;
+}
+.restroCard img{
+    width: 200px;
+}
+.restoContainer{
+    display: flex;
+    flex-wrap: wrap;
+}
+.shimmer-comntainer{
+    display: flex;
+    flex-wrap: wrap;
+}
+.shimmer-card{
+width: 200px;
+height: 400px;
+margin: 10px;
+background-color: #f0f0f0;
 }
