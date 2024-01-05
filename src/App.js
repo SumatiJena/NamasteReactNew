@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { Suspense, lazy } from "react";
 import ReactDOM from "react-dom/client";
 import Heading from "./component/Header";
 import Body from "./component/Body";
@@ -15,6 +15,7 @@ const AppLoayout=()=>{
         </div>
     )
 };
+const Grocery=lazy(()=>import("./component/Grocery"));
 const appRouter=createBrowserRouter([
     {
         path:"/",
@@ -35,12 +36,14 @@ const appRouter=createBrowserRouter([
             {
                 path:"/restaurant/:resId",
                 element:<Restromenu/>
+            },
+            {
+                path:"/grocery",
+                element:<Suspense><Grocery/></Suspense>
             }
 
         ]
     },
-    
-    
 ])
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<RouterProvider router={appRouter}/>);
