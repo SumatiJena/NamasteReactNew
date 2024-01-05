@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { restroItem } from "../../utils/Constatnt";
 import { Link } from "react-router-dom";
 import Shimmer from "./Shimmer";
+import useOnlineStatus from "../../utils/useOnlineStatus";
 const Body=()=>{
     const [resData, setResData]=useState([]);
     const [inputValue,setInputValue]=useState();
-    const [searchText, setSearchText]=useState(inputValue);
     const [searchDefaultData,setSearchDefaultData]=useState([])
     useEffect(()=>{
         featchData();
@@ -14,8 +14,8 @@ const Body=()=>{
     const featchData=async ()=>{
         const data=await fetch(restroItem);
        const jsonData=await data.json();
-       setResData(jsonData.data.cards[4].card.card.gridElements.infoWithStyle.restaurants)
-       setSearchDefaultData(jsonData.data.cards[4].card.card.gridElements.infoWithStyle.restaurants)
+       setResData(jsonData?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+       setSearchDefaultData(jsonData?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
     }
    const filterData=()=>{
     const resfilterData=searchDefaultData.filter((item)=>{
@@ -27,10 +27,14 @@ const searchData=()=>{
    const filterRestor= resData.filter((data)=>{
         return data.info.name.toLowerCase().includes(inputValue.toLowerCase())
     })
-    setSearchDefaultData(filterRestor)
+    setSearchDefaultData(filterRestor);
+}
+const online=useOnlineStatus();
+if(online==false){
+    return <div>Please check your internet</div>
 }
     return(
-        searchDefaultData.length==0?<Shimmer/>
+        searchDefaultData?.length==0?<Shimmer/>
         :(<div className="body">  
             <div className="search">
                 <div className="inputSear">
@@ -40,9 +44,11 @@ const searchData=()=>{
                 <button onClick={filterData}>Top restaurans</button>
             </div>
             <div className="restoContainer">
-                {searchDefaultData.map((restaurant)=>{
-                    return  <Link to={"/restaurant/"+ restaurant.info.id}><RestroCard restroData={restaurant} /></Link>
-                    }) 
+                {searchDefaultData?.map((restaurant)=>{
+                    return  <Link to={"/restaurant/"+ restaurant.info.id}>
+                        <RestroCard restroData={restaurant} />
+                    </Link>
+                }) 
                 }
             </div>
         </div>
