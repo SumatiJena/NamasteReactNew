@@ -1,17 +1,28 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import Heading from "./component/Header";
 import Body from "./component/Body";
 import Restromenu from "./component/Restromenu";
 import About from "./component/About";
 import Contact from "./component/Contact";
+import {useState } from "react";
+import Usercontext from "../utils/Usercontext";
 import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 
 const AppLoayout=()=>{
+    const [userName, setUserName]=useState();
+    useEffect(()=>{
+      const data={
+            user:"sumati Jena",
+        }
+        setUserName(data.user);
+    },[]);
     return( 
         <div id="container">
+            <Usercontext.Provider value={{user:userName, setUserName}}>
             <Heading/>
             <Outlet/>
+            </Usercontext.Provider>
         </div>
     )
 };
